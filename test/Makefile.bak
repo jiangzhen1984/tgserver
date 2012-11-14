@@ -1,0 +1,23 @@
+CC=gcc
+FLAGS= -DLINUX
+
+all:service_test context_test util_test server_test
+	echo ""	
+
+service_test:test.so
+	gcc $(FLAGS) $@.c -o $@ -lcontext -L../ -Ltestlib/ -ltest -ldl
+
+context_test:
+	gcc $(FLAGS) $@.c -o $@ -lcontext -L../ -ldl
+
+server_test:
+	$(CC) $(FLAGS) $@.c -o $@ -lcontext -L../ -ldl
+
+util_test:
+	gcc $(FLAGS) $@.c -o $@ -lcontext -L../ -ldl
+
+test.so:
+	make -C testlib/
+
+clean:
+	rm service_test context_test util_test server_test
